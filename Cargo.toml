@@ -1,0 +1,12 @@
+[package]
+name = "ros-igmp-querier"
+version = "0.1.0"
+edition = "2021"
+authors = ["Rowan"]
+description = "VLAN-aware IGMP Querier for MikroTik RouterOS containers"
+
+[dependencies]
+pnet = "0.34.0"
+pnet_datalink = "0.34.0"
+pnet_packet = "0.34.0"
+ctrlc = "3.4.4"
