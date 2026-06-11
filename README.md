@@ -12,6 +12,15 @@ This application is a minimal Rust binary that bypasses standard Linux networkin
 
 To prevent IP conflicts and handle IGMP querier elections reliably, it automatically derives a link-local source IP address (`169.254.X.Y`) where `X` and `Y` are the high and low bytes of the target VLAN ID.
 
+## Environment Variables
+
+The container is configured entirely via environment variables defined in RouterOS:
+
+* `VLANS` (Required): A comma-separated list of the target VLAN IDs (e.g., `10,20,30`).
+* `QUERIER_IP` (Optional): The source IP address injected into the IGMP query packets. Defaults to `dynamic` (derives `169.254.X.Y` based on the VLAN ID). Can be set to a static IPv4 address.
+* `INTERVAL` (Optional): The time in seconds to wait between sending queries. Defaults to `125` (standard IGMP general query interval).
+* `INTERFACE` (Optional): The internal container network interface to bind to. Defaults to `eth0`. If not found, the application automatically scans and binds to the first active, non-loopback interface.
+
 ## Building the Container
 
 RouterOS 7.21+ requires a strict OCI image format. The provided Dockerfile utilizes a two-stage build to cross-compile the binary for ARM64 without relying on QEMU emulation.
